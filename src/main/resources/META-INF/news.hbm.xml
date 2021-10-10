@@ -3,8 +3,8 @@
         "-//Hibernate/Hibernate Mapping DTD//EN"
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
-    <class name="com.alberta.hibernate.entities.News" table="NEWS">
-        <id name="id" type="java.lang.Integer">
+    <class name="com.alberta.hibernate.entities.News" table="NEWS" select-before-update="true">
+        <id name="id" type="java.lang.Integer" unsaved-value="11">
             <column name="ID" />
 <!--            指定主键的生成方式。native：使用数据库本地方式-->
             <generator class="native" />
