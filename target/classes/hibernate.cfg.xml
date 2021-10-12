@@ -20,8 +20,21 @@
         <property name="hibernate.hbm2ddl.auto">update</property>
 <!--    设置hibernate的事务隔离级别        -->
         <property name="hibernate.connection.isolation">2</property>
+<!--     使删除对象的OID值为null       -->
+        <property name="use_identifier_rollback">true</property>
+
+<!--     C3P0数据源连接池 配置       -->
+            <property name="c3p0.max_size">20</property>
+            <property name="c3p0.min_size">5</property>
+            <property name="c3p0.acquire_increment">5</property> <!-- 当连接池的连接耗尽时，同一时刻获取多少数据库连接 -->
+            <property name="c3p0.idle_test_period">60</property>
+            <property name="c3p0.timeout">2000</property>
 
 <!--        指定关联的 .hbm.xml文件-->
         <mapping resource="META-INF/news.hbm.xml" />
+        <mapping resource="META-INF/work.hbm.xml" />
+        <mapping resource="META-INF/order.hbm.xml" />
+        <mapping resource="META-INF/customer.hbm.xml" />
+
     </session-factory>
 </hibernate-configuration>

@@ -1,0 +1,21 @@
+<?xml version = "1.0" encoding = "utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.alberta.hibernate.entities">
+    <class name="Order" table="ORDERS" select-before-update="true" dynamic-update="true">
+        <id type="java.lang.Integer" name="orderId">
+            <column name="order_id" />
+            <generator class="native" />
+        </id>
+        <property name="orderName" column="order_name" type="java.lang.String" />
+
+<!--    映射多對一的關聯映射。使用many-to-one來映射多對一的關聯關係    -->
+<!--      name： many端關聯的one端的屬性名字 -->
+<!--      class：one端的屬性對應類名  -->
+<!--      column： one端在many端對應的數據表中的外鍵名字-->
+        <many-to-one name="customer" class="Customer" column="Customer_id"></many-to-one>
+    </class>
+
+</hibernate-mapping>

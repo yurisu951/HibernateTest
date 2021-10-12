@@ -1,4 +1,7 @@
 import com.alberta.hibernate.entities.News;
+import com.alberta.hibernate.entities.Pay;
+import com.alberta.hibernate.entities.Worker;
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -8,6 +11,8 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.jdbc.Work;
 import org.junit.jupiter.api.*;
 
+import java.io.*;
+import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.SQLException;
@@ -283,6 +288,56 @@ public class HibernateTest {
 //                调用存储过程
             }
         });
+    }
+
+
+    @Test
+    public void testDynamicUpdate(){
+        News news = session.get(News.class, 1);
+        news.setAuthor("DDDD");  // 开启动态更新，update语句只会更新改动过的属性
+    }
+
+    @Test
+    public void testFormula(){
+        News news = session.get(News.class, 1);
+        System.out.println(news.getDesc());
+    }
+
+    @Test
+    public void testBlobSave() throws IOException {
+        News news = new News();
+        news.setAuthor("cc");
+        news.setAuthor("CC");
+        news.setContent("CONTENT");
+        news.setDate(new java.util.Date());
+
+        InputStream stream = new FileInputStream(new File("src/main/resources/imgs/01-session.png"));
+        Blob image = Hibernate.getLobCreator(session).createBlob(stream, stream.available());
+        news.setImage(image);
+        session.save(news);
+    }
+
+    @Test
+    public void testBlobGet() throws SQLException, IOException {
+        News news = session.get(News.class, 1);
+        Blob image = news.getImage();
+        InputStream stream = image.getBinaryStream();
+        System.out.println(stream.available());
+    }
+
+
+    @Test
+    public void testComponent(){
+        Worker worker = new Worker();
+        Pay pay = new Pay();
+        pay.setMonthlyPay(1000);
+        pay.setVocationWithPay(200);
+        pay.setYearPay(3000);
+
+        worker.setPay(pay);
+        worker.setName("hh");
+        session.save(worker);
+
     }
 
 }
