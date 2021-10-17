@@ -1,0 +1,21 @@
+<?xml version = "1.0" encoding = "utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.alberta.hibernate.entities.one2one">
+    <class table="MANAGERS" name="Manager">
+        <id name="managerId"  type="java.lang.Integer">
+            <column name="manager_id" />
+            <generator class="native" />
+        </id>
+        <property name="managerName" column="manager_name" type="java.lang.String" />
+<!--       映射1-1 的關聯映射關係：在對應的數據表中已經有外鍵了，當前持久化類使用one-to-one進行映射 -->
+<!--        沒有外鍵的一端使用one-to-one元素，該元素使用property-ref屬性指定使用被關聯實體主鍵以外的字段作為關聯字段-->
+        <one-to-one name="department" class="Department" property-ref="manager">
+        </one-to-one>
+    </class>
+
+
+
+</hibernate-mapping>

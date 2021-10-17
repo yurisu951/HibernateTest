@@ -1,0 +1,20 @@
+<?xml version = "1.0" encoding = "utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.alberta.hibernate.entities.hql.Department" table="GG_DEPARTMENT" >
+        <id type="java.lang.Integer" name="id">
+            <column name="id" />
+            <generator class="native" />
+        </id>
+        <property name="deptName" type="java.lang.String" column="dept_name" />
+        <set name="employees" table="GG_EMPLOYEE" inverse="true" lazy="true">
+<!--         根據 EMPLOYEE 表裡面的外鍵 dept_id  -->
+            <key column="dept_id"></key>
+            <one-to-many class="com.alberta.hibernate.entities.hql.Employee" />
+        </set>
+    </class>
+
+</hibernate-mapping>

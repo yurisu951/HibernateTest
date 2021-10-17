@@ -1,0 +1,24 @@
+<?xml version = "1.0" encoding = "utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.alberta.hibernate.entities.subclass">
+    <class name="Person" table="PEOPLE">
+        <id type="java.lang.Integer" name="id">
+            <column name="id" />
+            <generator class="hilo" />
+        </id>
+
+        <property name="name" column="name" type="java.lang.String" />
+        <property name="age" column="age" type="int" />
+
+    </class>
+
+    <joined-subclass name="Student" table="STUDENTS" extends="Person">
+        <key column="STUDENT_id"></key>
+        <property name="school" column="school" type="java.lang.String" />
+     </joined-subclass>
+
+
+</hibernate-mapping>

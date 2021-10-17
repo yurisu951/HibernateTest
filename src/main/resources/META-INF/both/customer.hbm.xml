@@ -1,0 +1,28 @@
+<?xml version = "1.0" encoding = "utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.alberta.hibernate.entities.both">
+    <class name="Customer" table="CUSTOMERS" select-before-update="true" dynamic-update="true">
+        <id type="java.lang.Integer" name="customerId">
+            <column name="customer_id" />
+            <generator class="native" />
+        </id>
+        <property name="customerName" column="customer_name" type="java.lang.String" />
+
+<!--     映射 one對many 的那個屬性  -->
+<!--      set：映射set類型的屬性，table：set中的元素對應的紀錄放在哪張表裡  -->
+<!--      inverse：指定有哪一方来维护关联关系，通常设置为ture，指定由多的一方来维护关联关系  -->
+<!--      cascade：设置级联操作。 开发时不建议设定该属性，建议使用手工方式   -->
+<!--      order-by： 在查詢時對集合中的元素進行排序，order-by中使用的是表的字段名  -->
+        <set name="orders" table="ORDERS" inverse="true" order-by="order_name desc">
+<!--            執行many表的外鍵列的名字-->
+            <key column="Customer_id"></key>
+<!--            指定映射類型-->
+            <one-to-many class="Order" />
+        </set>
+
+    </class>
+
+</hibernate-mapping>

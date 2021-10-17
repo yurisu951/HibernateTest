@@ -1,0 +1,24 @@
+<?xml version = "1.0" encoding = "utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.alberta.hibernate.entities.one2one">
+    <class name="Department" table="DEPARTMENTS">
+        <id type="java.lang.Integer" name="departmentId" >
+            <column name="department_id" />
+<!--        使用外鍵的方式來生存當前的主鍵    -->
+            <generator class="foreign">
+<!--            property 屬性指定使用當前持久化類的哪一個屬性的主鍵作為外鍵    -->
+                <param name="property">manager</param>
+            </generator>
+        </id>
+        <property name="departmentName" column="department_name" type="java.lang.String" />
+<!--    採用foreign主鍵生成器策略的一端增加 one-to-one 元素映射關聯屬性，
+        其one-to-one節點還應增加 constrained，以使得當前的主鍵上添加外鍵約束 -->
+        <one-to-one name="manager" class="Manager" constrained="true"/>
+    </class>
+
+
+
+</hibernate-mapping>

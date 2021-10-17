@@ -1,0 +1,19 @@
+<?xml version = "1.0" encoding = "utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.alberta.hibernate.entities.one2one">
+    <class name="Department" table="DEPARTMENTS">
+        <id type="java.lang.Integer" name="departmentId" >
+            <column name="department_id" />
+            <generator class="native" />
+        </id>
+        <property name="departmentName" column="department_name" type="java.lang.String" />
+<!--    使用many-to-one 的方式來映射1-1關聯關係    -->
+        <many-to-one name="manager" class="Manager" column="manager_id" unique="true" cascade="all" />
+    </class>
+
+
+
+</hibernate-mapping>

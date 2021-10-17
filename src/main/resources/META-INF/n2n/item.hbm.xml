@@ -1,0 +1,23 @@
+<?xml version = "1.0" encoding = "utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping >
+    <class name="com.alberta.hibernate.entities.n2n.Item" table="ITEMS">
+        <id type="java.lang.Integer" name="id">
+            <column name="id" />
+            <generator class="native" />
+        </id>
+        <property name="name" column="name" type="java.lang.String" />
+        <set name="categories" table="CATEGORIES_ITEMS" inverse="true">
+<!--        key 指定外鍵列    -->
+            <key>
+                <column name="I_Id" />
+            </key>
+            <many-to-many class="com.alberta.hibernate.entities.n2n.Category" column="C_ID"></many-to-many>
+        </set>
+
+    </class>
+
+</hibernate-mapping>

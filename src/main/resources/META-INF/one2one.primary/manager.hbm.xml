@@ -1,0 +1,19 @@
+<?xml version = "1.0" encoding = "utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.alberta.hibernate.entities.one2one">
+    <class table="MANAGERS" name="Manager">
+        <id name="managerId"  type="java.lang.Integer">
+            <column name="manager_id" />
+            <generator class="native" />
+        </id>
+        <property name="managerName" column="manager_name" type="java.lang.String" />
+        <one-to-one name="department" class="Department" >
+        </one-to-one>
+    </class>
+
+
+
+</hibernate-mapping>

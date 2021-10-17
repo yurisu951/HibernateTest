@@ -1,0 +1,24 @@
+<?xml version = "1.0" encoding = "utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.alberta.hibernate.entities.both">
+    <class name="Customer" table="CUSTOMERS" select-before-update="true" dynamic-update="true">
+        <id type="java.lang.Integer" name="customerId">
+            <column name="customer_id" />
+            <generator class="native" />
+        </id>
+        <property name="customerName" column="customer_name" type="java.lang.String" />
+
+        <set name="orders" table="ORDERS"
+             inverse="true" order-by="order_name desc" lazy="true"
+             batch-size="5">
+<!--          set 元素的 batch-size 屬性：設定一次初始化 set 集合的數量  -->
+            <key column="Customer_id"></key>
+            <one-to-many class="Order" />
+        </set>
+
+    </class>
+
+</hibernate-mapping>
