@@ -6,12 +6,18 @@ import org.hibernate.Transaction;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.criterion.Restrictions;
 import org.hibernate.query.Query;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedHashSet;
 import java.util.List;
 
 
@@ -110,7 +116,39 @@ public class HibernateTest8_HQL {
         String hql = "SELECT min(e.salary) , max(e.salary)"
                 + "FROM Employee e GROUP BY e.dept" +
                 "Having min(salary) > :minSal";
+    }
 
+    @Test
+    public void testLeftJoinFetch(){
+        String hql = "FROM Department d LEFT JOIN FETCH d.emps";
+//        String hql = "select distinct  d FROM Department d LEFT JOIN FETCH d.emps";   去重方法1
+
+        List<Department> list = session.createQuery(hql).list();
+//        list = new ArrayList<>(new LinkedHashSet<>(list));   去重方法2
+        System.out.println(list.size());
+    }
+
+    @Test
+    public void testLeftJoin(){
+        String hql = "SELECT distinct d FROM Department d LEFT JOIN d.emps";
+
+//        String hql = "FROM Department d LEFT JOIN d.emps";
+
+//        List<Object[]> list = session.createQuery(hql).list();
+//        list = new ArrayList<>(new LinkedHashSet<>(list));  無法去重，因每個數組不一樣
+        List<Department> list = session.createQuery(hql).list();
+        System.out.println(list.size());
+    }
+
+    @Test
+    public void testQBC(){
+//        1. 創建一個Criteria對象
+        CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+        CriteriaQuery<Employee> query = criteriaBuilder.createQuery(Employee.class);
+//        2. 添加查詢條件
+        Predicate restriction = query.getRestriction();
+
+//        3. 執行查詢
     }
 
 
